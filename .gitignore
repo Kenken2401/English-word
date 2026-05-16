@@ -1,0 +1,8 @@
+node_modules/
+backend/vocab.db
+backend/.env
+backend/vocab.db-shm
+backend/vocab.db-wal
+.env
+dist/
+.DS_Store
