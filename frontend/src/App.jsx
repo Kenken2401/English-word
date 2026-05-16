@@ -4,10 +4,11 @@ import SearchBar from './components/SearchBar.jsx';
 import WordList from './components/WordList.jsx';
 import WordDetail from './components/WordDetail.jsx';
 import AddWord from './components/AddWord.jsx';
+import FlashCard from './components/FlashCard.jsx';
 import { fetchWords } from './api.js';
 
 export default function App() {
-  const [view, setView] = useState('list'); // 'list' | 'detail' | 'add'
+  const [view, setView] = useState('list'); // 'list' | 'detail' | 'add' | 'flashcard'
   const [selectedWord, setSelectedWord] = useState(null);
   const [words, setWords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -52,10 +53,19 @@ export default function App() {
     loadWords(searchQuery, posFilter);
   }
 
+  if (view === 'flashcard') {
+    return (
+      <div className="app">
+        <Header wordCount={words.length} onAddWord={() => setView('add')} onFlashCard={() => setView('flashcard')} activeView="flashcard" />
+        <FlashCard onBack={() => setView('list')} />
+      </div>
+    );
+  }
+
   if (view === 'add') {
     return (
       <div className="app">
-        <Header wordCount={words.length} onAddWord={() => setView('add')} />
+        <Header wordCount={words.length} onAddWord={() => setView('add')} onFlashCard={() => setView('flashcard')} />
         <AddWord onAdded={handleWordAdded} onCancel={() => setView('list')} />
       </div>
     );
@@ -64,7 +74,7 @@ export default function App() {
   if (view === 'detail' && selectedWord) {
     return (
       <div className="app">
-        <Header wordCount={words.length} onAddWord={() => setView('add')} />
+        <Header wordCount={words.length} onAddWord={() => setView('add')} onFlashCard={() => setView('flashcard')} />
         <WordDetail
           word={selectedWord}
           onBack={() => { setView('list'); setSelectedWord(null); }}
@@ -77,7 +87,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header wordCount={words.length} onAddWord={() => setView('add')} />
+      <Header wordCount={words.length} onAddWord={() => setView('add')} onFlashCard={() => setView('flashcard')} />
       <SearchBar
         query={searchQuery}
         pos={posFilter}
