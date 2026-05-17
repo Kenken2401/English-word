@@ -4,5 +4,6 @@ backend/.env
 backend/vocab.db-shm
 backend/vocab.db-wal
 .env
-dist/
+backend/node_modules/
+frontend/node_modules/
 .DS_Store
